@@ -6,14 +6,7 @@ export default {
     status: "",
     token: localStorage.getItem("token") || "",
     receivedUser: false,
-    user: localStorage.getItem("user") || {
-      fio: {
-        surname: "loading",
-        name: "loading",
-        midname: "loading"
-      },
-      role: "loading"
-    }
+    user: JSON.parse(localStorage.getItem("user"))
   },
   mutations: {
     auth_request(state) {
@@ -22,7 +15,6 @@ export default {
     auth_success(state, token) {
       state.status = "success";
       state.token = token;
-      // state.user = user;
     },
     auth_error(state) {
       state.status = "error";
@@ -30,6 +22,7 @@ export default {
     logout(state) {
       state.status = "";
       state.token = "";
+      // state.user = "";
     },
     setUserInfo_request(state) {
       state.status = "loading user info";
@@ -44,7 +37,7 @@ export default {
     }
   },
   actions: {
-    login({ commit, dispatch }, user) {
+    login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({ url: "/auth", method: "POST", data: user })
@@ -53,8 +46,7 @@ export default {
             localStorage.setItem("token", token);
             axios.defaults.headers.common["Authorization"] = token;
             commit("auth_success", token);
-            dispatch("getUserInfo");
-            resolve(resp);
+            resolve();
           })
           .catch(err => {
             commit("auth_error");
@@ -76,44 +68,74 @@ export default {
       });
     },
     getUserInfo({ commit }) {
-      axios({ url: "/getaccountinfo", method: "GET" })
-        .then(resp => {
-          localStorage.setItem("user", JSON.stringify(resp.data.user));
-          commit("setUserInfo_success", JSON.stringify(resp.data.user));
-        })
-        .catch(err => {
-          commit("setUserInfo_error");
-        });
+      return new Promise((resolve, reject) => {
+        axios({ url: "/getaccountinfo", method: "GET" })
+          .then(resp => {
+            localStorage.setItem("user", JSON.stringify(resp.data.user));
+            commit("setUserInfo_success", resp.data.user);
+            resolve(resp.data.user);
+          })
+          .catch(err => {
+            commit("setUserInfo_error");
+            reject(resp.data.user);
+          });
+      });
     }
   },
   getters: {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
-    getUserInfo: state => {
-      if (state.user !== "") return JSON.parse(state.user);
-    },
+    getUserInfo: state => state.user,
     getUserRoleWord: state => {
-      if (state.user !== "") {
-        let temp = JSON.parse(state.user);
-        switch (temp.role) {
-          case 1:
-            return "Администратор";
-            break;
-          case 2:
-            return "Ответственный за питание";
-            break;
-          case 3:
-            return "Классный руководитель";
-            break;
-          case 4:
-            return "КШП";
-            break;
-          case 5:
-            return "Родитель";
-            break;
-          default:
-            return "Ошибка!";
-        }
+      switch (state.user.role) {
+        case 1:
+          return "Администратор";
+          break;
+        case 2:
+          return "Ответственный за питание";
+          break;
+        case 3:
+          return "Классный руководитель";
+          break;
+        case 4:
+          return "КШП";
+          break;
+        case 5:
+          return "Родитель";
+          break;
+        default:
+          return "Ошибка!";
+      }
+    },
+    getUserAdditional: state => {
+      switch (state.user.role) {
+        case 1:
+          return { children: state.user.additional.children };
+          break;
+        case 2:
+          return {
+            children: state.user.additional.children,
+            school: state.user.additional.school
+          };
+          break;
+        case 3:
+          return {
+            children: state.user.additional.children,
+            school: state.user.additional.school,
+            class: state.user.additional.class
+          };
+          break;
+        case 4:
+          return {
+            children: state.user.additional.children,
+            school: state.user.additional.school
+          };
+          break;
+        case 5:
+          return { children: state.user.additional.children };
+          break;
+        default:
+          return {};
       }
     },
     getReceivedInfoStatus: state => state.receivedUser

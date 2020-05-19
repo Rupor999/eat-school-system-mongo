@@ -35,7 +35,7 @@
             </template>
 
             <v-list subheader>
-              <v-subheader>
+              <v-subheader v-if="userInfo">
                 {{
                   getGreetString(userInfo.fio.name, userInfo.fio.midname)
                 }}</v-subheader
@@ -97,7 +97,7 @@
             </template>
 
             <v-list subheader>
-              <v-subheader>
+              <v-subheader v-if="userInfo">
                 {{
                   getGreetString(userInfo.fio.name, userInfo.fio.midname)
                 }}</v-subheader
@@ -193,7 +193,7 @@ export default {
       return this.$store.getters["auth/isLoggedIn"];
     },
     userInfo: function() {
-      return this.$store.getters["auth/getUserInfo"] || false;
+      return this.$store.getters["auth/getUserInfo"];
     }
   }
 };

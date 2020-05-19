@@ -7,7 +7,7 @@
       raised
       width="300"
       min-height="200"
-      v-for="(item, index) in itemsMenuForCurrentUser(userInfo.role)"
+      v-for="(item, index) in itemsMenuForCurrentUser(userRole)"
       :key="index"
       @click="go(item.route)"
       class="hoverCard d-flex flex-column justify-center align-center ma-5 pa-1 elevation-11"
@@ -17,8 +17,6 @@
       <v-card-subtitle class="hoverCard">
         {{ item.subtitle }}
       </v-card-subtitle>
-      <!-- </v-img> -->
-      <!--  -->
     </v-card>
   </v-container>
 </template>
@@ -136,8 +134,8 @@ export default {
     }
   },
   computed: {
-    userInfo: function() {
-      return this.$store.getters["auth/getUserInfo"];
+    userRole: function() {
+      return this.$store.getters["auth/getUserInfo"].role;
     }
   }
 };

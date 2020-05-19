@@ -3,37 +3,115 @@ const mongoose = require("mongoose"),
 const api = {};
 
 //ТЕСТОВАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ ЮЗЕРА-АДМИНА
-api.createTestAdmin = User => (req, res) => {
-  // const admin = new User({
-  //   number: 9209281024,
-  //   password: "124",
-  //   fio: {
-  //     surname: "Панфилов",
-  //     name: "Илья",
-  //     midname: "Андреевич"
-  //   },
-  //   role: 1
-  // });
+api.createTestUsers = User => (req, res) => {
   const admin = new User({
-    number: 9209281023,
+    number: 9209209201,
     password: "124",
     fio: {
-      surname: "Иванов",
-      name: "Иван",
-      midname: "Иванович"
+      surname: "Панфилов",
+      name: "Илья",
+      midname: "Андреевич"
     },
-    role: 1
+    role: 1,
+    additional: {
+      children: ["5ddaf31e8b593618b07be94e", "5ddbfb12b24ec70ae02c53ed"]
+    }
+  });
+
+  const otvzapit = new User({
+    number: 9209209202,
+    password: "124",
+    fio: {
+      surname: "Панфилов",
+      name: "Илья",
+      midname: "Андреевич"
+    },
+    role: 2,
+    additional: {
+      children: ["5ddaf31e8b593618b07be94e", "5ddbfb12b24ec70ae02c53ed"],
+      school: ["5ddae76c42cb6718b005ff09"]
+    }
+  });
+
+  const klruk = new User({
+    number: 9209209203,
+    password: "124",
+    fio: {
+      surname: "Панфилов",
+      name: "Илья",
+      midname: "Андреевич"
+    },
+    role: 3,
+    additional: {
+      children: ["5ddaf31e8b593618b07be94e", "5ddbfb12b24ec70ae02c53ed"],
+      school: ["5ddae76c42cb6718b005ff09"],
+      class: [{ number: 10, letter: "Б" }, { number: 2, letter: "А" }]
+    }
+  });
+
+  const kshp = new User({
+    number: 9209209204,
+    password: "124",
+    fio: {
+      surname: "Панфилов",
+      name: "Илья",
+      midname: "Андреевич"
+    },
+    role: 4,
+    additional: {
+      children: ["5ddaf31e8b593618b07be94e", "5ddbfb12b24ec70ae02c53ed"],
+      school: ["5ddae76c42cb6718b005ff09", "5ddae78742cb6718b005ff0b"]
+    }
+  });
+
+  const roditel = new User({
+    number: 9209209205,
+    password: "124",
+    fio: {
+      surname: "Панфилов",
+      name: "Илья",
+      midname: "Андреевич"
+    },
+    role: 5,
+    additional: {
+      children: ["5ddaf31e8b593618b07be94e", "5ddbfb12b24ec70ae02c53ed"]
+    }
   });
 
   admin.save(error => {
-    try {
-      if (error) throw error;
-      console.log("Admin account was succesfully set up");
-      res.json({ success: true });
-    } catch (e) {
-      console.log(e);
-      res.json(e);
-    }
+    if (error) throw error;
+    return res.json({
+      success: true,
+      text: "Admin account was succesfully set up"
+    });
+  });
+  otvzapit.save(error => {
+    if (error) throw error;
+    return res.json({
+      success: true,
+      text: "Otvzapit account was succesfully set up"
+    });
+  });
+  klruk.save(error => {
+    if (error) throw error;
+    return res.json({
+      success: true,
+      text: "Klruk account was succesfully set up"
+    });
+  });
+  kshp.save(error => {
+    if (error) throw error;
+    return res.json({
+      success: true,
+      text: "Kshp account was succesfully set up"
+    });
+  });
+  roditel.save(error => {
+    if (error) throw error;
+    return res.json({
+      success: true,
+      text: "Roditel account was succesfully set up"
+    });
   });
 };
 

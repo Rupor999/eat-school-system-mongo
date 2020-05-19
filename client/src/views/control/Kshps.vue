@@ -6,7 +6,7 @@
     <v-card :loading="loading">
       <v-card-title class="text-center justify-center py-6">
         <h1 class="display-5">
-          Города
+          Комбинаты школьного питания
         </h1>
       </v-card-title>
       <v-tabs v-model="tab" background-color="transparent" grow>
@@ -21,7 +21,7 @@
                   <v-expansion-panel>
                     <v-expansion-panel-header>
                       <v-row justify="space-around">
-                        Фильтр городов
+                        Фильтр КШП
                       </v-row>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>

@@ -55,15 +55,23 @@ api.getaccountinfo = (User, Secret) => ({ headers }, res) => {
             .status(403)
             .send({ success: false, message: "Unauthorized or bad token" });
         }
-        User.findById(decoded.user, (error, user_info) => {
-          if (error) throw error;
-          res.status(200).json({
-            success: true,
-            message: "User info send - OK",
-            user: { id: decoded.user, fio: user_info.fio, role: user_info.role }
+
+        User.findById(decoded.user)
+          .populate("additional.children")
+          .populate("additional.school")
+          .exec((error, user_info) => {
+            if (error) throw error;
+            return res.status(200).json({
+              success: true,
+              message: "User info send - OK",
+              user: {
+                id: decoded.user,
+                fio: user_info.fio,
+                role: user_info.role,
+                additional: user_info.additional
+              }
+            });
           });
-          // console.log(user);
-        });
       });
     } else {
       return res

@@ -4,7 +4,7 @@ const passport = require("passport"),
 
 module.exports = app => {
   const api = app.app.api.user;
-  app.post(config.API_VERSION + "setup", api.createTestAdmin(models.User));
+  app.post(config.API_VERSION + "setup", api.createTestUsers(models.User));
   app.post(config.API_VERSION + "signup", api.signup(models.User));
   //
   app.get(

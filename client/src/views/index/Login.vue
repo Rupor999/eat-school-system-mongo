@@ -54,18 +54,16 @@ export default {
   data() {
     return {
       user: {
-        number: "9209281024",
+        number: "9209209201",
         password: "124"
       }
     };
   },
   methods: {
-    login() {
-      this.$store
-        .dispatch("auth/login", this.user)
-        // .then(() => this.$router.push({ name: "control" }))
-        .then(() => this.$router.push("/control"))
-        .catch(err => console.log(err));
+    async login() {
+      await this.$store.dispatch("auth/login", this.user);
+      await this.$store.dispatch("auth/getUserInfo");
+      this.$router.push("/control");
     }
   },
   computed: {

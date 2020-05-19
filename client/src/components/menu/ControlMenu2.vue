@@ -35,10 +35,10 @@ export default {
   },
   computed: {
     userInfo: function() {
-      return this.$store.getters["auth/getUserInfo"] || false;
+      return this.$store.getters["auth/getUserInfo"];
     },
     userRoleWord() {
-      return this.$store.getters["auth/getUserRoleWord"] || false;
+      return this.$store.getters["auth/getUserRoleWord"];
     }
   }
 };
