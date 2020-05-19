@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5ddae6ad8b593618b07be94b"},"id_uchrezhdenia":{"$numberInt":"3301020"},"uchrezhdenie":"МБОУ СОШ №4 г. Коврова","id_kombinat":{"$numberInt":"330101"},"id_gorod":{"$numberInt":"3301"}}
+{"_id":{"$oid":"5ddae75b42cb6718b005ff08"},"id_uchrezhdenia":{"$numberInt":"3301032"},"uchrezhdenie":"МБОУ СОШ №8 г. Коврова","id_kombinat":{"$numberInt":"330101"},"id_gorod":{"$numberInt":"3301"}}
+{"_id":{"$oid":"5ddae76c42cb6718b005ff09"},"id_uchrezhdenia":{"$numberInt":"3301072"},"uchrezhdenie":"МБОУ СОШ №21 г. Коврова","id_kombinat":{"$numberInt":"330101"},"id_gorod":{"$numberInt":"3301"}}
+{"_id":{"$oid":"5ddae77a42cb6718b005ff0a"},"id_uchrezhdenia":{"$numberInt":"3301074"},"uchrezhdenie":"МБОУ СОШ №22 г. Коврова","id_kombinat":{"$numberInt":"330101"},"id_gorod":{"$numberInt":"3301"}}
+{"_id":{"$oid":"5ddae78742cb6718b005ff0b"},"id_uchrezhdenia":{"$numberInt":"3301076"},"uchrezhdenie":"МБОУ СОШ №23 г. Коврова","id_kombinat":{"$numberInt":"330101"},"id_gorod":{"$numberInt":"3301"}}

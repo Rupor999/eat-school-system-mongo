@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5ddc1dd3bf8ee01a5067bfcc"},"id_zachislenia":{"$numberInt":"1"},"id_uchenik":{"$numberLong":"330107200002"},"data_zachislenia":{"$date":{"$numberLong":"1574629260000"}},"nomer_cheka":{"$numberInt":"33325"},"summa":{"$numberDecimal":"50.00"}}
+{"_id":{"$oid":"5ddc1ed52943091a509c7b0a"},"id_zachislenia":{"$numberInt":"1"},"id_uchenik":{"$numberLong":"330107200001"},"data_zachislenia":{"$date":{"$numberLong":"1574629500000"}},"nomer_cheka":{"$numberInt":"33356"},"summa":{"$numberDecimal":"100.00"}}
+{"_id":{"$oid":"5ddc203f2943091a509c7b0b"},"id_zachislenia":{"$numberInt":"3"},"id_uchenik":{"$numberLong":"330107200003"},"data_zachislenia":{"$date":{"$numberLong":"1574629620000"}},"nomer_cheka":{"$numberInt":"33456"},"summa":{"$numberDecimal":"150.00"}}

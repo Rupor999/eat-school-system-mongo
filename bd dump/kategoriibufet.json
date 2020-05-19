@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5ddaea7d8b593618b07be94c"},"id_kategoriya":{"$numberInt":"1"},"kategoriya":"Напитки"}
+{"_id":{"$oid":"5ddaead142cb6718b005ff0c"},"id_kategoriya":{"$numberInt":"2"},"kategoriya":"Выпечка"}
+{"_id":{"$oid":"5ddaeae142cb6718b005ff0d"},"id_kategoriya":{"$numberInt":"3"},"kategoriya":"Кондитерские изделия"}
+{"_id":{"$oid":"5ddaeaee42cb6718b005ff0e"},"id_kategoriya":{"$numberInt":"4"},"kategoriya":"Фрукты и овощи"}

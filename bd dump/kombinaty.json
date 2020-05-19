@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5ddad323aa071115dca62db6"},"id_kombinat":{"$numberInt":"330101"},"kombinat":"КШП-1 Ковров"}
+{"_id":{"$oid":"5ddad37ec7c6b115dc4033c4"},"id_kombinat":{"$numberInt":"330201"},"kombinat":"КШП-1 Владимир"}
+{"_id":{"$oid":"5ddae5bc42cb6718b005ff07"},"id_kombinat":{"$numberInt":"330401"},"kombinat":"КШП-1 Муром"}

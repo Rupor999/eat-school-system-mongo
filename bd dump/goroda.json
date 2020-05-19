@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5ddacddaaa071115dca62db3"},"id_gorod":{"$numberInt":"3301"},"gorod":"Ковров"}
+{"_id":{"$oid":"5ddace5daa071115dca62db5"},"id_gorod":{"$numberInt":"3302"},"gorod":"Владимир"}
+{"_id":{"$oid":"5ddacf25c7c6b115dc4033c2"},"id_gorod":{"$numberInt":"3303"},"gorod":"Гусь-Хрустальный"}
+{"_id":{"$oid":"5ddad309c7c6b115dc4033c3"},"id_gorod":{"$numberInt":"3304"},"gorod":"Муром"}
