@@ -6,10 +6,10 @@
     :items-per-page="itemsPerPage"
     item-key="_id"
     class="elevation-0"
+    no-data-text="Нет данных"
     v-model="selected"
   >
-
-        <!-- <template v-slot:item.naimenovanie="props">
+    <!-- <template v-slot:item.naimenovanie="props">
           <v-edit-dialog
             :return-value.sync="props.item.naimenovanie"
             large
@@ -28,7 +28,6 @@
             </template>
           </v-edit-dialog>
         </template> -->
-
   </v-data-table>
 </template>
 

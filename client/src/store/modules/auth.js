@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     status: "",
+    loading: false,
     token: localStorage.getItem("token") || "",
     receivedUser: false,
     user: JSON.parse(localStorage.getItem("user"))
@@ -11,29 +12,34 @@ export default {
   mutations: {
     auth_request(state) {
       state.status = "loading";
+      state.loading = true;
     },
     auth_success(state, token) {
       state.status = "success";
       state.token = token;
+      state.loading = false;
     },
     auth_error(state) {
       state.status = "error";
+      state.loading = false;
     },
     logout(state) {
       state.status = "";
       state.token = "";
-      // state.user = "";
     },
     setUserInfo_request(state) {
       state.status = "loading user info";
+      state.loading = true;
     },
     setUserInfo_error(state) {
       state.status = "error get info";
+      state.loading = false;
     },
     setUserInfo_success(state, user) {
       state.status = "success get info";
       state.user = user;
       state.receivedUser = !state.receivedUser;
+      state.loading = false;
     }
   },
   actions: {
@@ -85,6 +91,7 @@ export default {
   getters: {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
+    getLoading: state => state.loading,
     getUserInfo: state => state.user,
     getUserRoleWord: state => {
       switch (state.user.role) {

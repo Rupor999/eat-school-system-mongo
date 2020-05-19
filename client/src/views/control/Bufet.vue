@@ -90,6 +90,7 @@
                     </v-card-title>
                     <v-card-text>
                       <v-select
+                        :disabled="disabledSchoolSelect"
                         v-model="selected_school"
                         :items="schoolsData"
                         label="Выберите школу"
@@ -98,7 +99,12 @@
                       ></v-select>
                     </v-card-text>
                     <v-card-actions>
-                      <v-btn @click="e1 = e1 - 1" text>Назад</v-btn>
+                      <v-btn
+                        :disabled="disabledBackButton"
+                        @click="e1 = e1 - 1"
+                        text
+                        >Назад</v-btn
+                      >
                     </v-card-actions>
                   </v-card>
                 </v-stepper-content>
@@ -152,33 +158,53 @@ export default {
     bufetForm,
     bufetsAction
   },
-  mounted() {
-    this.$store
-      .dispatch("cities/getCities")
-      .then(() => {})
-      .catch(err => console.log(err));
-    this.$store
-      .dispatch("kshps/getKshps")
-      .then(() => {})
-      .catch(err => console.log(err));
-    this.$store
-      .dispatch("schools/getSchools")
-      .then(() => {})
-      .catch(err => console.log(err));
-    this.$store
-      .dispatch("bufets/getBufets")
-      .then(() => {})
-      .catch(err => console.log(err));
+  async mounted() {
+    await this.$store.dispatch("cities/getCities");
+    await this.$store.dispatch("kshps/getKshps");
+    await this.$store.dispatch("schools/getSchools");
+    await this.$store.dispatch("bufets/getBufets");
+
+    let user = this.currentUser;
+    switch (user.role) {
+      case 1:
+        this.e1 = 1;
+        break;
+      case 2:
+        this.e1 = 3;
+        this.selected_school = user.additional.school[0]._id;
+        this.disabledSchoolSelect = true;
+        this.disabledBackButton = true;
+        break;
+      case 3:
+        this.e1 = 3;
+        this.selected_school = user.additional.school[0]._id;
+        this.disabledSchoolSelect = true;
+        this.disabledBackButton = true;
+        break;
+      case 4:
+        this.e1 = 3;
+        this.selected_kshp = user._id;
+        this.disabledBackButton = true;
+        break;
+      case 5:
+        this.e1 = 3;
+        this.selected_school = user.additional.children[0].id_school;
+        this.disabledSchoolSelect = true;
+        this.disabledBackButton = true;
+        break;
+    }
   },
   data() {
     return {
-      e1: 1,
+      e1: 0,
       tab: null,
       tab_items: ["Буфет"],
       newData: [],
       selected_city: 0,
       selected_kshp: 0,
-      selected_school: 0
+      selected_school: 0,
+      disabledSchoolSelect: false,
+      disabledBackButton: false
     };
   },
   computed: {
@@ -233,6 +259,9 @@ export default {
     },
     bufetsData() {
       return this.$store.getters["bufets/getBufets"] || [];
+    },
+    currentUser() {
+      return this.$store.getters["auth/getUserInfo"];
     }
   },
   methods: {
