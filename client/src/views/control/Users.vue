@@ -56,7 +56,13 @@
               v-bind:key="index"
               formName="userForm"
               v-bind:inputData="item"
-            />
+            >
+              <template>
+                <v-btn @click="newData.splice(index, 1)" icon color="error"
+                  ><v-icon>mdi-close</v-icon></v-btn
+                >
+              </template>
+            </userForm>
             <v-row class="d-flex justify-space-around">
               <v-btn class="ma-4" @click="addNewItem">Добавить</v-btn>
 
@@ -78,7 +84,9 @@
                 @click="newData = []"
                 >Удалить все формы</v-btn
               >
-              <v-btn class="ma-4" color="primary">Сохранить</v-btn>
+              <v-btn v-show="newData.length" class="ma-4" color="primary"
+                >Сохранить</v-btn
+              >
             </v-row>
             <v-divider></v-divider>
             <v-row class="d-flex justify-space-around" v-if="showExcelPanel">

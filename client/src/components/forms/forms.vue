@@ -1,8 +1,9 @@
 <template lang="html">
-  <component
-    v-bind:is="formName"
-    v-bind:inputData="inputData || []"
-  ></component>
+  <component v-bind:is="formName" v-bind:inputData="inputData || []">
+    <template>
+      <slot> </slot>
+    </template>
+  </component>
 </template>
 
 <script>
