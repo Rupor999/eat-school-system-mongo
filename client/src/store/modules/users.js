@@ -32,6 +32,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    users_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     users_put(state, users) {
       state.status = "put operation";
       state.loading = true;
@@ -44,6 +48,10 @@ export default {
     users_get_success(state, users) {
       state.status = "get users success";
       state.users = users;
+      state.loading = false;
+    },
+    users_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     users_put_success(state, users) {
@@ -92,6 +100,20 @@ export default {
           .then(resp => {
             console.log(resp.data);
             commit("users_get_success", resp.data.users);
+            resolve(resp.data.users);
+          })
+          .catch(err => {
+            commit("users_error");
+            reject(err);
+          });
+      });
+    },
+    postUser({ commit }, newUser) {
+      return new Promise((resolve, reject) => {
+        commit("users_post");
+        axios({ url: "/users", method: "POST", data: newUser })
+          .then(resp => {
+            commit("users_post_success", resp.data.users);
             resolve(resp.data.users);
           })
           .catch(err => {

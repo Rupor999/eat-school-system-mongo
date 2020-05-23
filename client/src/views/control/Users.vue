@@ -84,8 +84,12 @@
                 @click="newData = []"
                 >Удалить все формы</v-btn
               >
-              <v-btn v-show="newData.length" class="ma-4" color="primary"
-                >Сохранить</v-btn
+              <v-btn
+                @click="sendNewUserData"
+                v-show="newData.length"
+                class="ma-4"
+                color="primary"
+                >Сохранить данные</v-btn
               >
             </v-row>
             <v-divider></v-divider>
@@ -225,7 +229,12 @@ export default {
             surname: data[i][2],
             name: data[i][3],
             midname: data[i][4],
-            role: data[i][5]
+            role: data[i][5],
+            additional: {
+              children: [],
+              school: [],
+              class: []
+            }
           });
       };
       reader.readAsBinaryString(file);
@@ -237,9 +246,27 @@ export default {
         surname: "",
         name: "",
         midname: "",
-        role: ""
+        role: "",
+        additional: {
+          children: [],
+          school: [],
+          class: []
+        }
       });
-    }
+    },
+    checkEmptyNewDataElement(data) {
+      if (
+        data.number == "" ||
+        data.password == "" ||
+        data.surname == "" ||
+        data.name == "" ||
+        data.midname == "" ||
+        data.role == ""
+      ) {
+        return false;
+      } else return true;
+    },
+    sendNewUserData() {}
   }
 };
 </script>

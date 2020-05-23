@@ -60,7 +60,7 @@
             <v-row>
               <v-col class="d-flex justify-space-around">
                 <h2 class="title mb-2">Дети</h2>
-                <v-btn icon color="primary"><v-icon>mdi-plus</v-icon></v-btn>
+                <addChildren v-bind:inputData="inputData" />
               </v-col>
             </v-row>
             <v-chip-group column multiple>
@@ -84,7 +84,11 @@
             <v-row>
               <v-col class="d-flex justify-space-around">
                 <h2 class="title mb-2">Школы</h2>
-                <v-btn v-show="schoolCounterStopAction" icon color="primary"
+                <v-btn
+                  @click="addSchool"
+                  v-show="schoolCounterStopAction"
+                  icon
+                  color="primary"
                   ><v-icon>mdi-plus</v-icon></v-btn
                 >
               </v-col>
@@ -110,7 +114,7 @@
             <v-row>
               <v-col class="d-flex justify-space-around">
                 <h2 class="title mb-2">Класс</h2>
-                <v-btn icon color="primary"><v-icon>mdi-plus</v-icon></v-btn>
+                <addClass v-bind:inputData="inputData" />
               </v-col>
             </v-row>
             <v-chip-group column multiple>
@@ -133,9 +137,16 @@
 </template>
 
 <script>
+import addClass from "@/components/forms/modalWindow/userForm/addClass";
+import addChildren from "@/components/forms/modalWindow/userForm/addChildren";
+
 export default {
   props: {
     inputData: Object
+  },
+  components: {
+    addClass,
+    addChildren
   },
   data() {
     return {
@@ -144,11 +155,6 @@ export default {
         school: false,
         class: false
       },
-      // additional: {
-      //   children: [],
-      //   school: [],
-      //   class: []
-      // },
       roleItems: [
         { id: 1, roleName: "Администратор" },
         { id: 2, roleName: "Ответственный за питание" },
@@ -158,7 +164,10 @@ export default {
       ]
     };
   },
-  methods: {},
+  methods: {
+    addChildren() {},
+    addSchool() {}
+  },
   computed: {
     show() {
       if (this.inputData.role) {
