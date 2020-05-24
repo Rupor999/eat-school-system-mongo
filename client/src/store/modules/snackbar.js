@@ -18,8 +18,8 @@ export default {
     }
   },
   actions: {
-    activate({ commit }, text, color) {
-      commit("activate", text);
+    activate({ commit }, param) {
+      commit("activate", param);
     },
     off({ commit }) {
       commit("off");

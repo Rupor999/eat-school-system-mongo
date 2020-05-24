@@ -2,10 +2,9 @@ const passport = require("passport"),
   config = require("@config"),
   models = require("@root/app/setup");
 
-module.exports = app => {
+module.exports = (app) => {
   const api = app.app.api.user;
   app.post(config.API_VERSION + "setup", api.createTestUsers(models.User));
-  app.post(config.API_VERSION + "signup", api.signup(models.User));
   //
   app.get(
     config.API_VERSION + "users",

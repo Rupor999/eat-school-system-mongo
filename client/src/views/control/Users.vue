@@ -39,7 +39,7 @@
               <v-card-actions>
                 <v-row class="d-flex justify-space-around">
                   <v-btn @click.prevent="getUsers" color="primary"
-                    >Получить данные</v-btn
+                    >Обновить данные</v-btn
                   >
                   <actionTable
                     actionName="userAction"
@@ -84,13 +84,7 @@
                 @click="newData = []"
                 >Удалить все формы</v-btn
               >
-              <v-btn
-                @click="sendNewUserData"
-                v-show="newData.length"
-                class="ma-4"
-                color="primary"
-                >Сохранить данные</v-btn
-              >
+              <saveLoading v-show="newData.length" v-bind:inputData="newData" />
             </v-row>
             <v-divider></v-divider>
             <v-row class="d-flex justify-space-around" v-if="showExcelPanel">
@@ -124,13 +118,21 @@ import filterTable from "@/components/tables/filters/filters";
 import userForm from "@/components/forms/forms";
 import actionTable from "@/components/tables/actions/actions";
 import XLSX from "xlsx";
+import saveLoading from "@/components/forms/modalWindow/userForm/saveLoading";
 
 export default {
   components: {
     usersTable,
     filterTable,
     userForm,
-    actionTable
+    actionTable,
+    saveLoading
+  },
+  mounted() {
+    this.$store
+      .dispatch("users/getUsers")
+      .then(() => {})
+      .catch(err => console.log(err));
   },
   data() {
     return {
