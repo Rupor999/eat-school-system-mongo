@@ -84,13 +84,10 @@
             <v-row>
               <v-col class="d-flex justify-space-around">
                 <h2 class="title mb-2">Школы</h2>
-                <v-btn
-                  @click="addSchool"
-                  v-show="schoolCounterStopAction"
-                  icon
-                  color="primary"
-                  ><v-icon>mdi-plus</v-icon></v-btn
-                >
+                <addSchool
+                  v-bind:inputData="inputData"
+                  v-bind:showAdd="schoolCounterStopAction"
+                />
               </v-col>
             </v-row>
             <v-chip-group column multiple>
@@ -139,6 +136,7 @@
 <script>
 import addClass from "@/components/forms/modalWindow/userForm/addClass";
 import addChildren from "@/components/forms/modalWindow/userForm/addChildren";
+import addSchool from "@/components/forms/modalWindow/userForm/addSchool";
 
 export default {
   props: {
@@ -146,7 +144,8 @@ export default {
   },
   components: {
     addClass,
-    addChildren
+    addChildren,
+    addSchool
   },
   data() {
     return {
@@ -163,10 +162,6 @@ export default {
         { id: 5, roleName: "Родитель" }
       ]
     };
-  },
-  methods: {
-    addChildren() {},
-    addSchool() {}
   },
   computed: {
     show() {
@@ -199,6 +194,8 @@ export default {
       return this.additional_permission.class;
     },
     schoolCounterStopAction() {
+      console.log("Role: " + this.inputData.role);
+      console.log("SChool: " + this.inputData.additional.school.length);
       if (this.inputData.role === 2 || this.inputData.role === 3) {
         if (this.inputData.additional.school.length === 1) {
           return false;
