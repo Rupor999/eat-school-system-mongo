@@ -41,10 +41,7 @@
                   <v-btn @click.prevent="getUsers" color="primary"
                     >Обновить данные</v-btn
                   >
-                  <actionTable
-                    actionName="userAction"
-                    v-show="userActionsShow"
-                  />
+                  <actionTable actionName="userAction" v-if="userActionsShow" />
                 </v-row>
               </v-card-actions>
             </v-card>
@@ -197,9 +194,7 @@ export default {
       });
     },
     userActionsShow() {
-      return this.$store.getters["users/getSelectedRows"].length > 0
-        ? true
-        : false;
+      return this.$store.getters["users/getSelectedRows"].length;
     }
   },
   methods: {

@@ -1,11 +1,9 @@
 <template lang="html">
   <div>
     <v-card class="mx-auto pa-3 my-1" max-width="800" outlined>
-      <!-- <v-card-title primary-title> -->
       <div class="d-flex justify-end">
         <slot></slot>
       </div>
-      <!-- </v-card-title> -->
       <v-card-text>
         <v-row>
           <v-text-field
@@ -194,8 +192,6 @@ export default {
       return this.additional_permission.class;
     },
     schoolCounterStopAction() {
-      console.log("Role: " + this.inputData.role);
-      console.log("SChool: " + this.inputData.additional.school.length);
       if (this.inputData.role === 2 || this.inputData.role === 3) {
         if (this.inputData.additional.school.length === 1) {
           return false;

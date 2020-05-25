@@ -1,5 +1,6 @@
 const mongoose = require("mongoose"),
-  jwt = require("jsonwebtoken");
+  jwt = require("jsonwebtoken"),
+  bcrypt = require("bcrypt");
 const api = {};
 
 //ТЕСТОВАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ ЮЗЕРА-АДМИНА
@@ -121,13 +122,16 @@ api.createTestUsers = (User) => (req, res) => {
 //ФУНКЦИЯ ВЫВОДА ВСЕХ ЮЗЕРОВ
 //СОМНИТЕЛЬНАЯ ПРОВЕРКА ТОКЕНА
 api.getUsers = (User, Token) => (req, res) => {
-  console.log(req.headers); /////////////////////////////////////////////////////////////////////////////
+  // console.log(req.headers); /////////////////////////////////////////////////////////////////////////////
   const token = Token;
   if (token) {
-    User.find({}, (error, users) => {
-      if (error) throw error;
-      res.status(200).json({ success: true, users: users });
-    });
+    User.find({})
+      .populate("additional.children")
+      .populate("additional.school")
+      .exec((error, users) => {
+        if (error) throw error;
+        res.status(200).json({ success: true, users: users });
+      });
   } else
     return res.status(403).send({ success: false, message: "Unauthorized" });
 };
@@ -171,47 +175,96 @@ api.newUser = (User) => (req, res) => {
             req.body.additional.school.push(temp_mass[i].id);
           }
         }
-        console.log(req.body);
-        // const newUser = new User({
-        //   number: req.body.number,
-        //   password: req.body.password,
-        //   fio: {
-        //     surname: req.body.surname,
-        //     name: req.body.name,
-        //     midname: req.body.midname,
-        //   },
-        //   role: req.body.role,
-        //   additional: req.body.additional,
-        // });
-        // newUser.save((err) => {
-        //   if (err)
-        //     return res
-        //       .status(400)
-        //       .json({ success: false, message: "Ошибка сохранения." });
-        //   else
-        //     return res
-        //       .status(201)
-        //       .json({ success: true, message: "Аккаунт успешно сохранен." });
-        // });
+        const newUser = new User({
+          number: req.body.number,
+          password: req.body.password,
+          fio: {
+            surname: req.body.surname,
+            name: req.body.name,
+            midname: req.body.midname,
+          },
+          role: req.body.role,
+          additional: req.body.additional,
+        });
+        newUser.save((err) => {
+          if (err)
+            return res
+              .status(400)
+              .json({ success: false, message: "Ошибка сохранения." });
+          else
+            return res
+              .status(201)
+              .json({ success: true, message: "Аккаунт успешно сохранен." });
+        });
       }
     });
   }
 };
 // Модификация пользователя
 api.modifyUser = (User) => (req, res) => {
-  User.findByIdAndUpdate(req.body._id, req.body.changes, (err, user) => {
-    if (err) {
-      res.status(400).json({
-        success: false,
-        message: "Ошибка изменения данных пользователя.",
+  let newUserData = req.body;
+
+  let id = { _id: newUserData._id };
+  delete newUserData._id;
+
+  for (var i = 0; i < newUserData.additional.children.length; i++) {
+    newUserData.additional.children[i] = newUserData.additional.children[i]._id;
+  }
+
+  for (var i = 0; i < newUserData.additional.school.length; i++) {
+    newUserData.additional.school[i] = newUserData.additional.school[i]._id;
+  }
+
+  for (var i = 0; i < newUserData.additional.class.length; i++) {
+    delete newUserData.additional.class[i]._id;
+  }
+
+  if (newUserData.password.length !== 0) {
+    bcrypt.genSalt(10, (error, salt) => {
+      if (error)
+        return res.status(400).json({
+          success: false,
+          message: "Ошибка изменения данных пользователя.",
+        });
+      bcrypt.hash(newUserData["password"], salt, (error, encrypted) => {
+        if (error)
+          return res.status(400).json({
+            success: false,
+            message: "Ошибка изменения данных пользователя.",
+          });
+        newUserData["password"] = encrypted;
+
+        User.findByIdAndUpdate(id, newUserData, (err, user) => {
+          if (err) {
+            return res.status(400).json({
+              success: false,
+              message: "Ошибка изменения данных пользователя.",
+            });
+          } else {
+            return res.status(201).json({
+              success: true,
+              message: "Изменение данных пользователя прошло успешно.",
+            });
+          }
+        });
       });
-    } else {
-      res.status(201).json({
-        success: true,
-        message: "Изменение данных пользователя прошло успешно.",
-      });
-    }
-  });
+    });
+  } else {
+    delete newUserData.password;
+    User.findByIdAndUpdate(id, newUserData, (err, user) => {
+      if (err) {
+        return res.status(400).json({
+          success: false,
+          message: "Ошибка изменения данных пользователя.",
+        });
+      } else {
+        return res.status(201).json({
+          success: true,
+          message: "Изменение данных пользователя прошло успешно.",
+        });
+      }
+    });
+  }
 };
 // Удаление пользователя
 api.deleteUser = (User) => (req, res) => {

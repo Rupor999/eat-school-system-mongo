@@ -18,8 +18,11 @@ export default {
     }
   },
   actions: {
-    activate({ commit }, param) {
+    activate({ commit, dispatch }, param) {
       commit("activate", param);
+      setTimeout(() => {
+        dispatch("off");
+      }, 3000);
     },
     off({ commit }) {
       commit("off");

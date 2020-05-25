@@ -4,11 +4,7 @@
 
     <router-view></router-view>
 
-    <v-snackbar
-      :color="snackbar.color"
-      :timeout="3000"
-      v-model="snackbar.enabled"
-    >
+    <v-snackbar :color="snackbar.color" :timeout="0" v-model="snackbar.enabled">
       {{ snackbar.text }}
       <v-btn dark text text @click="offSnackBar">
         Закрыть

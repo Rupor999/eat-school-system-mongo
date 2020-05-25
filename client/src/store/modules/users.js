@@ -5,7 +5,7 @@ export default {
   state: {
     //start table_settings
     tableSettings: {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         { text: "id", align: "left", sortable: false, value: "_id" },
         { text: "Фамилия", value: "fio.surname" },
@@ -122,12 +122,33 @@ export default {
           });
       });
     },
-    putUser({ commit }) {
-      commit("users_put");
-      axios({ url });
+    putUser({ commit }, editUser) {
+      return new Promise((resolve, reject) => {
+        commit("users_put");
+        axios({ url: "/users", method: "PUT", data: editUser })
+          .then(resp => {
+            commit("users_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("users_error");
+            reject(err);
+          });
+      });
     },
-    deleteUser({ commit }) {
-      commit("users_delete");
+    deleteUser({ commit }, userId) {
+      return new Promise((resolve, reject) => {
+        commit("users_delete");
+        axios({ url: "/users", method: "DELETE", data: userId })
+          .then(resp => {
+            commit("users_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("users_error");
+            reject(err);
+          });
+      });
     },
 
     setSelectedRows({ commit }, selectedRows) {
