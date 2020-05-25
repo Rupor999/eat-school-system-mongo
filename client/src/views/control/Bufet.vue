@@ -140,6 +140,64 @@
               </v-card-actions>
             </v-card>
           </v-tab-item>
+          <v-tab-item class="pa-3">
+            <bufetForm
+              v-if="newData.length > 0"
+              v-for="(item, index) in newData"
+              v-bind:key="index"
+              formName="bufetForm"
+              v-bind:inputData="item"
+            >
+              <template>
+                <v-btn @click="newData.splice(index, 1)" icon color="error"
+                  ><v-icon>mdi-close</v-icon></v-btn
+                >
+              </template>
+            </bufetForm>
+            <v-row class="d-flex justify-space-around">
+              <v-btn class="ma-4" @click="addNewItem">Добавить</v-btn>
+
+              <v-btn
+                color="green"
+                v-show="!showExcelPanel"
+                class="ma-4"
+                @click="showExcelPanel = true"
+                >Добавить из файла Excel</v-btn
+              >
+              <v-btn
+                v-show="showExcelPanel"
+                class="ma-4"
+                @click="showExcelPanel = false"
+                >Скрыть панель Excel</v-btn
+              >
+              <v-btn
+                v-show="newData.length"
+                class="ma-4 error"
+                @click="newData = []"
+                >Удалить все формы</v-btn
+              >
+              <saveLoading v-show="newData.length" v-bind:inputData="newData" />
+            </v-row>
+            <v-divider></v-divider>
+            <v-row class="d-flex justify-space-around" v-if="showExcelPanel">
+              <div class="d-flex flex-row align-center">
+                <span>Скачать форму файла - </span>
+                <a target="_blank" href="/excel/addBufetTemplate.xlsx"
+                  ><v-img width="50" height="50" src="/excelIcon.png"></v-img
+                ></a>
+              </div>
+              <div class="d-flex flex-row align-center">
+                <v-file-input
+                  accept=".xlsx"
+                  ref="myfile"
+                  label="Загрузка файла Excel"
+                  v-model="file"
+                  @change="fileExtract"
+                  @click:clear="newData = []"
+                ></v-file-input>
+              </div>
+            </v-row>
+          </v-tab-item>
         </v-tabs-items>
       </v-tabs>
     </v-card>
@@ -151,18 +209,21 @@ import bufetsTable from "@/components/tables/dataTable/table";
 import bufetForm from "@/components/forms/forms";
 import bufetsAction from "@/components/tables/actions/actions";
 import XLSX from "xlsx";
+import saveLoading from "@/components/forms/modalWindow/bufetForm/saveLoading";
 
 export default {
   components: {
     bufetsTable,
     bufetForm,
-    bufetsAction
+    bufetsAction,
+    saveLoading
   },
   async mounted() {
     await this.$store.dispatch("cities/getCities");
     await this.$store.dispatch("kshps/getKshps");
     await this.$store.dispatch("schools/getSchools");
     await this.$store.dispatch("bufets/getBufets");
+    await this.$store.dispatch("categoriesBufet/getCategoriesBufet");
 
     let user = this.currentUser;
     switch (user.role) {
@@ -183,7 +244,7 @@ export default {
         break;
       case 4:
         this.e1 = 3;
-        this.selected_kshp = user._id;
+        this.selected_kshp = user._id; //косяк////////////////////////////////////////
         this.disabledBackButton = true;
         break;
       case 5:
@@ -198,13 +259,15 @@ export default {
     return {
       e1: 0,
       tab: null,
-      tab_items: ["Буфет"],
+      tab_items: ["Буфет", "Добавить новую позицию"],
       newData: [],
       selected_city: 0,
       selected_kshp: 0,
       selected_school: 0,
       disabledSchoolSelect: false,
-      disabledBackButton: false
+      disabledBackButton: false,
+      showExcelPanel: false,
+      file: null
     };
   },
   computed: {
@@ -304,6 +367,36 @@ export default {
           this.selected_school
         } от ${new Date().toLocaleDateString()}.xlsx`
       );
+    },
+    fileExtract: function(evt) {
+      this._file(evt);
+    },
+    _file(file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const bstr = e.target.result;
+        const wb = XLSX.read(bstr, { type: "binary" });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        data.shift();
+        for (var i = 0; i < data.length; i++)
+          this.newData.push({
+            id_uchrezhdenia: "",
+            id_kategoriya: "",
+            naimenovanie: data[i][0],
+            cena: data[i][1]
+          });
+      };
+      reader.readAsBinaryString(file);
+    },
+    addNewItem() {
+      this.newData.push({
+        id_uchrezhdenia: "",
+        id_kategoriya: "",
+        naimenovanie: "",
+        cena: 0
+      });
     }
   }
 };

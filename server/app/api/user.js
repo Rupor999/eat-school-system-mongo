@@ -234,7 +234,7 @@ api.modifyUser = (User) => (req, res) => {
           });
         newUserData["password"] = encrypted;
 
-        User.findByIdAndUpdate(id, newUserData, (err, user) => {
+        User.findByIdAndUpdate(id, newUserData, (err) => {
           if (err) {
             return res.status(400).json({
               success: false,
@@ -251,7 +251,7 @@ api.modifyUser = (User) => (req, res) => {
     });
   } else {
     delete newUserData.password;
-    User.findByIdAndUpdate(id, newUserData, (err, user) => {
+    User.findByIdAndUpdate(id, newUserData, (err) => {
       if (err) {
         return res.status(400).json({
           success: false,

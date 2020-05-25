@@ -98,7 +98,6 @@ export default {
         commit("users_get");
         axios({ url: "/users", method: "GET" })
           .then(resp => {
-            console.log(resp.data);
             commit("users_get_success", resp.data.users);
             resolve(resp.data.users);
           })

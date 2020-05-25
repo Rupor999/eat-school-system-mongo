@@ -64,6 +64,7 @@
               <v-btn class="ma-4" @click="addNewItem">Добавить</v-btn>
 
               <v-btn
+                color="green"
                 v-show="!showExcelPanel"
                 class="ma-4"
                 @click="showExcelPanel = true"
@@ -250,20 +251,7 @@ export default {
           class: []
         }
       });
-    },
-    checkEmptyNewDataElement(data) {
-      if (
-        data.number == "" ||
-        data.password == "" ||
-        data.surname == "" ||
-        data.name == "" ||
-        data.midname == "" ||
-        data.role == ""
-      ) {
-        return false;
-      } else return true;
-    },
-    sendNewUserData() {}
+    }
   }
 };
 </script>

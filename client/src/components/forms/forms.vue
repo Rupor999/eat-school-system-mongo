@@ -13,6 +13,7 @@ import cityForm from "@/components/forms/cityForm";
 import kshpForm from "@/components/forms/kshpForm";
 import categoriesBufetForm from "@/components/forms/categoriesBufetForm";
 import schoolForm from "@/components/forms/schoolForm";
+import bufetForm from "@/components/forms/bufetForm";
 
 export default {
   props: ["formName", "inputData"],
@@ -22,7 +23,8 @@ export default {
     cityForm,
     kshpForm,
     categoriesBufetForm,
-    schoolForm
+    schoolForm,
+    bufetForm
   }
 };
 </script>

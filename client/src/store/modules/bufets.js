@@ -26,6 +26,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    bufets_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     bufets_put(state, bufets) {
       state.status = "put operation";
       state.loading = true;
@@ -38,6 +42,10 @@ export default {
     bufets_get_success(state, bufets) {
       state.status = "get schools success";
       state.bufets = bufets;
+      state.loading = false;
+    },
+    bufets_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     bufets_put_success(state, bufets) {
@@ -67,7 +75,6 @@ export default {
         commit("bufets_get");
         axios({ url: "/bufet", method: "GET" })
           .then(resp => {
-            console.log(resp.data);
             commit("bufets_get_success", resp.data.bufets);
             resolve(resp.data.bufets);
           })
@@ -77,13 +84,49 @@ export default {
           });
       });
     },
-    putBufets({ commit }) {
-      commit("bufets_put");
-      axios({ url });
+    postBufet({ commit }, newBufet) {
+      return new Promise((resolve, reject) => {
+        commit("bufets_post");
+        axios({ url: "/bufet", method: "POST", data: newBufet })
+          .then(resp => {
+            commit("bufets_post_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("bufets_error");
+            reject(err);
+          });
+      });
     },
-    deleteBufets({ commit }) {
-      commit("bufets_delete");
+    putBufet({ commit }, editBufet) {
+      return new Promise((resolve, reject) => {
+        commit("bufets_put");
+        axios({ url: "/bufet", method: "PUT", data: editBufet })
+          .then(resp => {
+            commit("bufets_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("bufets_error");
+            reject(err);
+          });
+      });
     },
+    deleteBufet({ commit }, deleteBufet) {
+      return new Promise((resolve, reject) => {
+        commit("bufets_delete");
+        axios({ url: "/bufet", method: "DELETE", data: deleteBufet })
+          .then(resp => {
+            commit("bufets_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("bufets_error");
+            reject(err);
+          });
+      });
+    },
+
     setSelectedRows({ commit }, selectedRows) {
       commit("set_selected_rows", selectedRows);
     }
