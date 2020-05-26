@@ -5,7 +5,7 @@ export default {
   state: {
     //start table_settings
     tableSettings: {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         { text: "id", align: "left", sortable: false, value: "_id" },
         { text: "id ученика", value: "id_uchenik" },
@@ -19,8 +19,8 @@ export default {
         { text: "Механизм", value: "mehanizm" },
         { text: "Разрешение ГП", value: "goryachee_pitanie" },
         { text: "Разрешение буфет", value: "bufet" },
-        { text: "Баланс ГП", value: "balans_gp.$numberDecimal" },
-        { text: "Баланс буфета", value: "balans_bufet.$numberDecimal" },
+        { text: "Баланс ГП", value: "balans_gp" },
+        { text: "Баланс буфета", value: "balans_bufet" },
         { text: "Удален?", value: "udalenniy" },
         { text: "Чип-карта", value: "chip_karty" },
         { text: "Примечание", value: "primechanie" }
@@ -50,6 +50,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    pupils_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     pupils_put(state, pupils) {
       state.status = "put operation";
       state.loading = true;
@@ -62,6 +66,10 @@ export default {
     pupils_get_success(state, pupils) {
       state.status = "get pupils success";
       state.pupils = pupils;
+      state.loading = false;
+    },
+    pupils_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     pupils_put_success(state, pupils) {
@@ -140,6 +148,12 @@ export default {
         axios({ url: "/pupil", method: "GET" })
           .then(resp => {
             console.log(resp.data);
+            for (var i = 0; i < resp.data.pupils.length; i++) {
+              resp.data.pupils[i].balans_gp =
+                resp.data.pupils[i].balans_gp.$numberDecimal;
+              resp.data.pupils[i].balans_bufet =
+                resp.data.pupils[i].balans_bufet.$numberDecimal;
+            }
             commit("pupils_get_success", resp.data.pupils);
             resolve(resp.data.pupils);
           })
@@ -149,12 +163,47 @@ export default {
           });
       });
     },
-    putPupil({ commit }) {
-      commit("pupils_put");
-      axios({ url });
+    postPupil({ commit }, newPupil) {
+      return new Promise((resolve, reject) => {
+        commit("pupils_post");
+        axios({ url: "/pupil", method: "POST", data: newPupil })
+          .then(resp => {
+            commit("pupils_post_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("pupils_error");
+            reject(err);
+          });
+      });
     },
-    deletePupil({ commit }) {
-      commit("pupils_delete");
+    putPupil({ commit }, editPupil) {
+      return new Promise((resolve, reject) => {
+        commit("pupils_put");
+        axios({ url: "/pupil", method: "PUT", data: editPupil })
+          .then(resp => {
+            commit("pupils_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("pupils_error");
+            reject(err);
+          });
+      });
+    },
+    deletePupil({ commit }, deletePupil) {
+      return new Promise((resolve, reject) => {
+        commit("pupils_delete");
+        axios({ url: "/pupil", method: "DELETE", data: deletePupil })
+          .then(resp => {
+            commit("pupils_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("pupils_error");
+            reject(err);
+          });
+      });
     },
 
     setSelectedRows({ commit }, selectedRows) {

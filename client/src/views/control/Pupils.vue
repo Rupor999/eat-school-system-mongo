@@ -39,11 +39,11 @@
               <v-card-actions>
                 <v-row class="d-flex justify-space-around">
                   <v-btn @click.prevent="getPupils" color="primary"
-                    >Получить данные</v-btn
+                    >Обновить данные</v-btn
                   >
                   <pupilsAction
                     actionName="pupilAction"
-                    v-show="pupilsActionsShow"
+                    v-if="pupilsActionsShow"
                   />
                 </v-row>
               </v-card-actions>
@@ -56,7 +56,13 @@
               v-for="(item, index) in newData"
               v-bind:key="index"
               v-bind:inputData="item"
-            />
+            >
+              <template>
+                <v-btn @click="newData.splice(index, 1)" icon color="error"
+                  ><v-icon>mdi-close</v-icon></v-btn
+                >
+              </template>
+            </pupilForm>
             <v-row class="d-flex justify-space-around">
               <v-btn class="ma-4" @click="addNewItem">Добавить</v-btn>
               <v-btn
@@ -65,10 +71,10 @@
                 @click="newData = []"
                 >Удалить все формы</v-btn
               >
-
-              <v-btn v-if="newData.length > 0" class="ma-4" color="primary"
-                >Сохранить</v-btn
-              >
+              <saveLoading
+                v-if="newData.length > 0"
+                v-bind:inputData="newData"
+              />
             </v-row>
           </v-tab-item>
         </v-tabs-items>
@@ -82,15 +88,21 @@ import pupilsTable from "@/components/tables/dataTable/table";
 import filterTable from "@/components/tables/filters/filters";
 import pupilForm from "@/components/forms/forms";
 import pupilsAction from "@/components/tables/actions/actions";
+import saveLoading from "@/components/forms/modalWindow/pupilForm/saveLoading";
 
 export default {
   components: {
     pupilsTable,
     filterTable,
     pupilForm,
-    pupilsAction
+    pupilsAction,
+    saveLoading
   },
   mounted() {
+    this.$store
+      .dispatch("pupils/getPupils")
+      .then(() => {})
+      .catch(err => console.log(err));
     this.$store
       .dispatch("schools/getSchools")
       .then(() => {})

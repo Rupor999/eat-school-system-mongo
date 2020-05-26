@@ -7,10 +7,13 @@
 
       <v-card outlined :loading="loading">
         <v-card-title light class="headline" primary-title>
-          Редактирование буфета
+          Редактирование ученика
         </v-card-title>
         <v-card-text>
-          <bufetForm formName="bufetForm" v-bind:inputData="inputData" />
+          <pupilsForm formName="pupilForm" v-bind:inputData="inputData" />
+        </v-card-text>
+        <v-card-text>
+          <slot></slot>
         </v-card-text>
 
         <v-card-actions class="d-flex justify-center">
@@ -22,11 +25,11 @@
 </template>
 
 <script>
-import bufetForm from "@/components/forms/forms";
+import pupilsForm from "@/components/forms/forms";
 
 export default {
   components: {
-    bufetForm
+    pupilsForm
   },
   data() {
     return {
@@ -37,7 +40,7 @@ export default {
     saveData() {
       // console.log(this.$store.getters["users/getSelectedRows"]);
       this.$store
-        .dispatch("bufets/putBufet", this.inputData)
+        .dispatch("pupils/putPupil", this.inputData)
         .then(() => {
           this.$store.dispatch("snackbar/activate", {
             text: "Данные успешно сохранены!",
@@ -58,11 +61,18 @@ export default {
   },
   computed: {
     inputData() {
-      let bufet = this.$store.getters["bufets/getSelectedRows"];
-      return bufet[0];
+      let pupil = this.$store.getters["pupils/getSelectedRows"];
+      pupil[0].cifra_kl = pupil[0].cifra_kl + "";
+      pupil[0].bukva_kl = pupil[0].bukva_kl.toLowerCase();
+      pupil[0].pol = pupil[0].pol + "";
+      pupil[0].mehanizm = pupil[0].mehanizm + "";
+      pupil[0].goryachee_pitanie =
+        pupil[0].goryachee_pitanie == true ? "1" : "0";
+      pupil[0].bufet = pupil[0].bufet == true ? "1" : "0";
+      return pupil[0];
     },
     loading() {
-      return this.$store.getters["bufets/getLoading"];
+      return this.$store.getters["pupils/getLoading"];
     }
   }
 };

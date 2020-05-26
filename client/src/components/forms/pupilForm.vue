@@ -1,6 +1,9 @@
 <template lang="html">
   <div>
     <v-card class="mx-auto pa-3 my-1" max-width="800" outlined>
+      <div class="d-flex justify-end">
+        <slot></slot>
+      </div>
       <v-card-text>
         <v-row class="d-flex flex-column">
           <v-col>
@@ -33,7 +36,7 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-col class="d-flex flex-wrap">
+          <v-col class="d-flex">
             <v-row>
               <v-col>
                 <v-select

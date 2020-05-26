@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import userForm from "@/components/forms/userForm";
+import userForm from "@/components/forms/forms";
 import addClass from "@/components/tables/actions/modalWindow/userAction/addClass";
 import addChildren from "@/components/tables/actions/modalWindow/userAction/addChildren";
 import addSchool from "@/components/tables/actions/modalWindow/userAction/addSchool";

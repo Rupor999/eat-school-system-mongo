@@ -4,73 +4,81 @@ const pupilSchema = mongoose.Schema(
   {
     id_uchenik: {
       type: Number,
-      required: true
+      required: false,
     },
     id_school: {
       type: String,
-      required: true
+      required: true,
     },
     cifra_kl: {
       type: Number,
-      required: true
+      required: true,
     },
     bukva_kl: {
       type: String,
-      required: true
+      required: true,
     },
     familia: {
       type: String,
-      required: true
+      required: true,
     },
     imya: {
       type: String,
-      required: true
+      required: true,
     },
     otchestvo: {
       type: String,
-      required: true
+      required: true,
     },
     pol: {
       type: Number,
-      required: true
+      required: true,
     },
     mehanizm: {
       type: Number,
-      required: true
+      required: true,
+      default: 0,
     },
     goryachee_pitanie: {
       type: Boolean,
-      required: true
+      required: true,
+      default: false,
     },
     bufet: {
       type: Boolean,
-      required: true
+      required: true,
+      default: false,
     },
     balans_gp: {
       type: mongoose.Decimal128,
-      required: true
+      required: true,
+      default: 0.0,
     },
     balans_bufet: {
       type: mongoose.Decimal128,
-      required: true
+      required: true,
+      default: 0.0,
     },
     udalenniy: {
       type: Number,
-      required: true
+      required: true,
+      default: 0,
     },
     chip_karty: {
       type: String,
-      required: false
+      required: false,
+      default: "",
     },
     primechanie: {
       type: String,
-      required: false
-    }
+      required: false,
+      default: "",
+    },
   },
   { versionKey: false }
 );
 
-pupilSchema.pre("save", function(next) {
+pupilSchema.pre("save", function (next) {
   if (this.isNew) {
     checkAvailableNumber(this, next);
   }
@@ -86,9 +94,6 @@ async function checkAvailableNumber(schema, next) {
   do {
     number = await generateNumber();
     record = await findRecord(schema, number);
-    if (stopCount > 0) {
-      console.log("СОВПАДЕНИЕ!" + number + " stopCount: " + stopCount);
-    }
     stopCount++;
     if (stopCount > 100) break;
   } while (record !== null);
@@ -111,7 +116,7 @@ function findRecord(schema, number) {
 }
 
 function generateNumber() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     var min = 100000000000;
     var max = 999999999999;
     resolve(Math.floor(Math.random() * (max - min)) + min);
