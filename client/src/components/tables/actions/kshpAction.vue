@@ -1,12 +1,25 @@
 <template lang="html">
-  <div>
-    <v-btn color="info">Редактировать</v-btn>
-    <v-btn color="error">Удалить</v-btn>
+  <div class="d-flex">
+    <editKshp class="mr-1" v-show="selectedData < 2" />
+    <deleteKshp class="ml-1" />
   </div>
 </template>
 
 <script>
-export default {};
+import editKshp from "@/components/tables/actions/modalWindow/kshpAction/editKshp";
+import deleteKshp from "@/components/tables/actions/modalWindow/kshpAction/deleteKshp";
+
+export default {
+  components: {
+    editKshp,
+    deleteKshp
+  },
+  computed: {
+    selectedData() {
+      return this.$store.getters["kshps/getSelectedRows"].length;
+    }
+  }
+};
 </script>
 
 <style lang="css" scoped></style>

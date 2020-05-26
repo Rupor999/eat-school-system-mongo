@@ -5,7 +5,7 @@ export default {
   state: {
     //start table_settings
     tableSettings: {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         { text: "id", align: "center", sortable: false, value: "_id" },
         { text: "Город", align: "left", value: "city_id" },
@@ -27,6 +27,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    kshps_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     kshps_put(state, kshps) {
       state.status = "put operation";
       state.loading = true;
@@ -39,6 +43,10 @@ export default {
     kshps_get_success(state, kshps) {
       state.status = "get kshps success";
       state.kshps = kshps;
+      state.loading = false;
+    },
+    kshps_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     kshps_put_success(state, kshps) {
@@ -87,12 +95,47 @@ export default {
           });
       });
     },
-    putKshps({ commit }) {
-      commit("kshps_put");
-      axios({ url });
+    postKshp({ commit }, newKshp) {
+      return new Promise((resolve, reject) => {
+        commit("kshps_post");
+        axios({ url: "/kshp", method: "POST", data: newKshp })
+          .then(resp => {
+            commit("kshps_post_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("kshps_error");
+            reject(err);
+          });
+      });
     },
-    deleteKshps({ commit }) {
-      commit("kshps_delete");
+    putKshp({ commit }, editKshp) {
+      return new Promise((resolve, reject) => {
+        commit("kshps_put");
+        axios({ url: "/kshp", method: "PUT", data: editKshp })
+          .then(resp => {
+            commit("kshps_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("kshps_error");
+            reject(err);
+          });
+      });
+    },
+    deleteKshp({ commit }, deleteKshp) {
+      return new Promise((resolve, reject) => {
+        commit("kshps_delete");
+        axios({ url: "/kshp", method: "DELETE", data: deleteKshp })
+          .then(resp => {
+            commit("kshps_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("kshps_error");
+            reject(err);
+          });
+      });
     },
 
     setSelectedRows({ commit }, selectedRows) {

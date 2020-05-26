@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const kshpSchema = mongoose.Schema(
   {
-    city: {
+    city_id: {
       type: String,
-      required: true
+      required: true,
     },
     kombinat: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   { versionKey: false }
 );

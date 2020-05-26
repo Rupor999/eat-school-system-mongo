@@ -30,7 +30,7 @@ api.newSchool = (School) => (req, res) => {
       else
         return res
           .status(201)
-          .json({ success: true, message: "Товар буфета успешно сохранен." });
+          .json({ success: true, message: "Школа успешно сохранена." });
     });
   }
 };
@@ -45,12 +45,12 @@ api.modifySchool = (School) => (req, res) => {
     if (err) {
       return res.status(400).json({
         success: false,
-        message: "Ошибка изменения данных пользователя.",
+        message: "Ошибка изменения данных школы.",
       });
     } else {
       return res.status(201).json({
         success: true,
-        message: "Изменение данных пользователя прошло успешно.",
+        message: "Изменение данных школы прошло успешно.",
       });
     }
   });
@@ -61,12 +61,12 @@ api.deleteSchool = (School) => (req, res) => {
     if (err) {
       res.status(400).json({
         success: false,
-        message: "Ошибка при удалении пользователя.",
+        message: "Ошибка при удалении школы.",
       });
     } else {
       res.status(201).json({
         success: true,
-        message: "Пользователь успешно удален.",
+        message: "Школа успешно удалена.",
       });
     }
   });

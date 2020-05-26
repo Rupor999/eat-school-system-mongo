@@ -39,11 +39,11 @@
               <v-card-actions>
                 <v-row class="d-flex justify-space-around">
                   <v-btn @click.prevent="getKshps" color="primary"
-                    >Получить данные</v-btn
+                    >Обновить данные</v-btn
                   >
                   <kshpsAction
                     actionName="kshpAction"
-                    v-show="kshpsActionsShow"
+                    v-if="kshpsActionsShow"
                   />
                 </v-row>
               </v-card-actions>
@@ -56,7 +56,13 @@
               v-for="(item, index) in newData"
               v-bind:key="index"
               v-bind:inputData="item"
-            />
+            >
+              <template>
+                <v-btn @click="newData.splice(index, 1)" icon color="error"
+                  ><v-icon>mdi-close</v-icon></v-btn
+                >
+              </template>
+            </kshpForm>
             <v-row class="d-flex justify-space-around">
               <v-btn class="ma-4" @click="addNewItem">Добавить</v-btn>
               <v-btn
@@ -66,9 +72,7 @@
                 >Удалить все формы</v-btn
               >
 
-              <v-btn v-if="newData.length > 0" class="ma-4" color="primary"
-                >Сохранить</v-btn
-              >
+              <saveLoading v-show="newData.length" v-bind:inputData="newData" />
             </v-row>
           </v-tab-item>
         </v-tabs-items>
@@ -82,13 +86,15 @@ import kshpsTable from "@/components/tables/dataTable/table";
 import filterTable from "@/components/tables/filters/filters";
 import kshpForm from "@/components/forms/forms";
 import kshpsAction from "@/components/tables/actions/actions";
+import saveLoading from "@/components/forms/modalWindow/kshpForm/saveLoading";
 
 export default {
   components: {
     kshpsTable,
     filterTable,
     kshpForm,
-    kshpsAction
+    kshpsAction,
+    saveLoading
   },
   data() {
     return {
@@ -99,6 +105,10 @@ export default {
   },
   mounted() {
     //получаем города для фильтра и формы
+    this.$store
+      .dispatch("kshps/getKshps")
+      .then(() => {})
+      .catch(err => console.log(err));
     this.$store
       .dispatch("cities/getCities")
       .then(() => {})

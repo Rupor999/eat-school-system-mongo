@@ -79,12 +79,12 @@ api.deletePupil = (Pupil) => (req, res) => {
     if (err) {
       res.status(400).json({
         success: false,
-        message: "Ошибка при удалении пользователя.",
+        message: "Ошибка при удалении ученика.",
       });
     } else {
       res.status(201).json({
         success: true,
-        message: "Пользователь успешно удален.",
+        message: "Ученик успешно удален.",
       });
     }
   });
