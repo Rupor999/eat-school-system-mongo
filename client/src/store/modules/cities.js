@@ -5,7 +5,7 @@ export default {
   state: {
     //start table_settings
     tableSettings: {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         { text: "id", align: "center", sortable: false, value: "_id" },
         { text: "Регион", align: "left", value: "region" },
@@ -27,6 +27,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    cities_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     cities_put(state, cities) {
       state.status = "put operation";
       state.loading = true;
@@ -39,6 +43,10 @@ export default {
     cities_get_success(state, cities) {
       state.status = "get cities success";
       state.cities = cities;
+      state.loading = false;
+    },
+    cities_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     cities_put_success(state, cities) {
@@ -87,12 +95,47 @@ export default {
           });
       });
     },
-    putCities({ commit }) {
-      commit("cities_put");
-      axios({ url });
+    postCity({ commit }, newCity) {
+      return new Promise((resolve, reject) => {
+        commit("cities_post");
+        axios({ url: "/city", method: "POST", data: newCity })
+          .then(resp => {
+            commit("cities_post_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("cities_error");
+            reject(err);
+          });
+      });
     },
-    deleteCities({ commit }) {
-      commit("cities_delete");
+    putCity({ commit }, editCity) {
+      return new Promise((resolve, reject) => {
+        commit("cities_put");
+        axios({ url: "/city", method: "PUT", data: editCity })
+          .then(resp => {
+            commit("cities_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("cities_error");
+            reject(err);
+          });
+      });
+    },
+    deleteCity({ commit }, deleteCity) {
+      return new Promise((resolve, reject) => {
+        commit("cities_delete");
+        axios({ url: "/city", method: "DELETE", data: deleteCity })
+          .then(resp => {
+            commit("cities_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("cities_error");
+            reject(err);
+          });
+      });
     },
 
     setSelectedRows({ commit }, selectedRows) {
