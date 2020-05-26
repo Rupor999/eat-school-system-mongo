@@ -134,7 +134,7 @@
                   >
                   <bufetsAction
                     actionName="bufetAction"
-                    v-show="bufetsActionsShow"
+                    v-if="bufetsActionsShow"
                   />
                 </v-row>
               </v-card-actions>

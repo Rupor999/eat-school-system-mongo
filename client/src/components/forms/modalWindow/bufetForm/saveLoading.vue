@@ -66,6 +66,7 @@ export default {
           text: "Данные успешно внесены",
           color: "green"
         });
+        this.$store.dispatch("bufets/getBufets");
       }
     }
   },

@@ -11,7 +11,7 @@ export default {
         { text: "Школа", value: "id_uchrezhdenia" },
         { text: "Категория", value: "id_kategoriya" },
         { text: "Наименование", value: "naimenovanie" },
-        { text: "Цена", value: "cena.$numberDecimal" }
+        { text: "Цена", value: "cena" }
       ]
     },
     //end table_settings
@@ -75,6 +75,11 @@ export default {
         commit("bufets_get");
         axios({ url: "/bufet", method: "GET" })
           .then(resp => {
+            console.log(resp.data);
+            for (var i = 0; i < resp.data.bufets.length; i++) {
+              resp.data.bufets[i].cena =
+                resp.data.bufets[i].cena.$numberDecimal;
+            }
             commit("bufets_get_success", resp.data.bufets);
             resolve(resp.data.bufets);
           })

@@ -38,7 +38,7 @@ export default {
     async deleteData() {
       while (this.inputData.length) {
         await this.$store
-          .dispatch("users/deleteUser", this.inputData[0])
+          .dispatch("bufets/deleteBufet", this.inputData[0])
           .then(() => {
             this.inputData.splice(0, 1);
           })
@@ -62,7 +62,7 @@ export default {
           color: "green"
         });
         this.$store
-          .dispatch("users/getUsers")
+          .dispatch("bufets/getBufets")
           .then(() => {})
           .catch(err => console.log(err));
       }
@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     inputData() {
-      return this.$store.getters["users/getSelectedRows"];
+      return this.$store.getters["bufets/getSelectedRows"];
     },
     amount() {
       return this.inputData.length;
@@ -79,7 +79,7 @@ export default {
       return 100 / this.amount;
     },
     error() {
-      return this.$store.getters["users/getStatus"] === "error"
+      return this.$store.getters["bufets/getStatus"] === "error"
         ? "error"
         : "primary";
     }

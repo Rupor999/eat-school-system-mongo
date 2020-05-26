@@ -47,7 +47,7 @@ api.modifyBufet = (Bufet) => (req, res) => {
   let id = { _id: newBufetData._id };
   delete newBufetData._id;
 
-  Bufet.findByIdAndUpdate(id, newUserData, (err) => {
+  Bufet.findByIdAndUpdate(id, newBufetData, (err) => {
     if (err) {
       return res.status(400).json({
         success: false,
