@@ -1,6 +1,9 @@
 <template lang="html">
   <div>
     <v-card class="mx-auto pa-3 my-1" max-width="800" outlined>
+      <div class="d-flex justify-end">
+        <slot></slot>
+      </div>
       <v-card-text>
         <v-row>
           <v-text-field

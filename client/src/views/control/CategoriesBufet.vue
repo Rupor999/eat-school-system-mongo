@@ -43,7 +43,7 @@
                   >
                   <categoriesBufetAction
                     actionName="categoriesBufetAction"
-                    v-show="categoriesBufetActionsShow"
+                    v-if="categoriesBufetActionsShow"
                   />
                 </v-row>
               </v-card-actions>
@@ -56,7 +56,13 @@
               v-for="(item, index) in newData"
               v-bind:key="index"
               v-bind:inputData="item"
-            />
+            >
+              <template>
+                <v-btn @click="newData.splice(index, 1)" icon color="error"
+                  ><v-icon>mdi-close</v-icon></v-btn
+                >
+              </template>
+            </categoriesBufetForm>
             <v-row class="d-flex justify-space-around">
               <v-btn class="ma-4" @click="addNewItem">Добавить</v-btn>
               <v-btn
@@ -66,9 +72,7 @@
                 >Удалить все формы</v-btn
               >
 
-              <v-btn v-if="newData.length > 0" class="ma-4" color="primary"
-                >Сохранить</v-btn
-              >
+              <saveLoading v-show="newData.length" v-bind:inputData="newData" />
             </v-row>
           </v-tab-item>
         </v-tabs-items>
@@ -82,13 +86,21 @@ import categoriesBufetTable from "@/components/tables/dataTable/table";
 import filterTable from "@/components/tables/filters/filters";
 import categoriesBufetForm from "@/components/forms/forms";
 import categoriesBufetAction from "@/components/tables/actions/actions";
+import saveLoading from "@/components/forms/modalWindow/categoriesBufetForm/saveLoading";
 
 export default {
   components: {
     categoriesBufetTable,
     filterTable,
     categoriesBufetForm,
-    categoriesBufetAction
+    categoriesBufetAction,
+    saveLoading
+  },
+  mounted() {
+    this.$store
+      .dispatch("categoriesBufet/getCategoriesBufet")
+      .then(() => {})
+      .catch(err => console.log(err));
   },
   data() {
     return {

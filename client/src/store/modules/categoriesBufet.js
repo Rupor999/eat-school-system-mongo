@@ -5,7 +5,7 @@ export default {
   state: {
     //start table_settings
     tableSettings: {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         { text: "id", align: "center", sortable: false, value: "_id" },
         { text: "Название категории", align: "left", value: "kategoriya" }
@@ -25,6 +25,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    categoriesBufet_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     categoriesBufet_put(state, categoriesBufet) {
       state.status = "put operation";
       state.loading = true;
@@ -37,6 +41,10 @@ export default {
     categoriesBufet_get_success(state, categoriesBufet) {
       state.status = "get categoriesBufet success";
       state.categoriesBufet = categoriesBufet;
+      state.loading = false;
+    },
+    categoriesBufet_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     categoriesBufet_put_success(state, categoriesBufet) {
@@ -81,12 +89,59 @@ export default {
           });
       });
     },
-    putCategoriesBufet({ commit }) {
-      commit("categoriesBufet_put");
-      axios({ url });
+    postCategoriesBufet({ commit }, newCategoriesBufet) {
+      return new Promise((resolve, reject) => {
+        commit("categoriesBufet_post");
+        axios({
+          url: "/categoriesBufet",
+          method: "POST",
+          data: newCategoriesBufet
+        })
+          .then(resp => {
+            commit("categoriesBufet_post_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("categoriesBufet_error");
+            reject(err);
+          });
+      });
     },
-    deleteCategoriesBufet({ commit }) {
-      commit("categoriesBufet_delete");
+    putCategoriesBufet({ commit }, editCategoriesBufet) {
+      return new Promise((resolve, reject) => {
+        commit("categoriesBufet_put");
+        axios({
+          url: "/categoriesBufet",
+          method: "PUT",
+          data: editCategoriesBufet
+        })
+          .then(resp => {
+            commit("categoriesBufet_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("categoriesBufet_error");
+            reject(err);
+          });
+      });
+    },
+    deleteCategoriesBufet({ commit }, deleteCategoriesBufet) {
+      return new Promise((resolve, reject) => {
+        commit("categoriesBufet_delete");
+        axios({
+          url: "/categoriesBufet",
+          method: "DELETE",
+          data: deleteCategoriesBufet
+        })
+          .then(resp => {
+            commit("categoriesBufet_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("categoriesBufet_error");
+            reject(err);
+          });
+      });
     },
 
     setSelectedRows({ commit }, selectedRows) {
