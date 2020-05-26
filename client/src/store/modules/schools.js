@@ -5,7 +5,7 @@ export default {
   state: {
     //start table_settings
     tableSettings: {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         { text: "id", align: "center", sortable: false, value: "_id" },
         { text: "Город", align: "left", value: "id_city" },
@@ -29,6 +29,10 @@ export default {
       state.status = "get operation";
       state.loading = true;
     },
+    schools_post(state) {
+      state.status = "post operation";
+      state.loading = true;
+    },
     schools_put(state, schools) {
       state.status = "put operation";
       state.loading = true;
@@ -41,6 +45,10 @@ export default {
     schools_get_success(state, schools) {
       state.status = "get schools success";
       state.schools = schools;
+      state.loading = false;
+    },
+    schools_post_success(state) {
+      state.status = "post operation success";
       state.loading = false;
     },
     schools_put_success(state, schools) {
@@ -93,12 +101,47 @@ export default {
           });
       });
     },
-    putSchools({ commit }) {
-      commit("schools_put");
-      axios({ url });
+    postSchool({ commit }, newSchool) {
+      return new Promise((resolve, reject) => {
+        commit("schools_post");
+        axios({ url: "/school", method: "POST", data: newSchool })
+          .then(resp => {
+            commit("schools_post_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("schools_error");
+            reject(err);
+          });
+      });
     },
-    deleteSchools({ commit }) {
-      commit("schools_delete");
+    putSchool({ commit }, editSchool) {
+      return new Promise((resolve, reject) => {
+        commit("schools_put");
+        axios({ url: "/school", method: "PUT", data: editSchool })
+          .then(resp => {
+            commit("schools_put_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("schools_error");
+            reject(err);
+          });
+      });
+    },
+    deleteSchool({ commit }, deleteSchool) {
+      return new Promise((resolve, reject) => {
+        commit("schools_delete");
+        axios({ url: "/school", method: "DELETE", data: deleteSchool })
+          .then(resp => {
+            commit("schools_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("schools_error");
+            reject(err);
+          });
+      });
     },
 
     setSelectedRows({ commit }, selectedRows) {

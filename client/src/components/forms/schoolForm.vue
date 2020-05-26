@@ -45,7 +45,9 @@ export default {
       return this.$store.getters["cities/getCities"];
     },
     kshpsData: function() {
-      return this.$store.getters["kshps/getKshps"];
+      return this.$store.getters["kshps/getKshps"].filter(item => {
+        return this.inputData.id_city == item.city_id ? true : false;
+      });
     }
   }
 };
