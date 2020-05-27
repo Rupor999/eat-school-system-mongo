@@ -81,7 +81,7 @@ const pupilSchema = mongoose.Schema(
 pupilSchema.pre("save", function (next) {
   if (this.isNew) {
     checkAvailableNumber(this, next);
-  }
+  } else next();
 });
 
 mongoose.model("Pupil", pupilSchema);

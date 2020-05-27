@@ -286,9 +286,6 @@ export default {
           text: "Ошибка",
           color: "error"
         });
-        let timer = setTimeout(() => {
-          this.$store.dispatch("snackbar/off");
-        }, 5000);
       }
     },
     filterKshp() {

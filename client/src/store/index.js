@@ -10,6 +10,8 @@ import cities from "./modules/cities";
 import kshps from "./modules/kshps";
 import categoriesBufet from "./modules/categoriesBufet";
 import schools from "./modules/schools";
+import rashodovano from "./modules/rashodovano";
+import zachisleno from "./modules/zachisleno";
 
 Vue.use(Vuex);
 
@@ -23,6 +25,8 @@ export default new Vuex.Store({
     cities,
     kshps,
     categoriesBufet,
-    schools
+    schools,
+    rashodovano,
+    zachisleno
   }
 });

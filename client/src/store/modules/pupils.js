@@ -62,6 +62,10 @@ export default {
       state.status = "delete operation";
       state.loading = true;
     },
+    pupils_post_pay(state, pupils) {
+      state.status = "pay operation";
+      state.loading = true;
+    },
 
     pupils_get_success(state, pupils) {
       state.status = "get pupils success";
@@ -72,12 +76,16 @@ export default {
       state.status = "post operation success";
       state.loading = false;
     },
-    pupils_put_success(state, pupils) {
+    pupils_put_success(state) {
       state.status = "put operation success";
       state.loading = false;
     },
-    pupils_delete_success(state, pupils) {
+    pupils_delete_success(state) {
       state.status = "delete operation success";
+      state.loading = false;
+    },
+    pupils_post_pay_success(state) {
+      state.status = "post pay operation success";
       state.loading = false;
     },
 
@@ -197,6 +205,20 @@ export default {
         axios({ url: "/pupil", method: "DELETE", data: deletePupil })
           .then(resp => {
             commit("pupils_delete_success");
+            resolve();
+          })
+          .catch(err => {
+            commit("pupils_error");
+            reject(err);
+          });
+      });
+    },
+    postPayPupil({ commit }, pupilInfo) {
+      return new Promise((resolve, reject) => {
+        commit("pupils_post_pay");
+        axios({ url: "/pay", method: "POST", data: pupilInfo })
+          .then(resp => {
+            commit("pupils_post_pay_success");
             resolve();
           })
           .catch(err => {

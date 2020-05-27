@@ -2,7 +2,7 @@ const passport = require("passport"),
   config = require("@config"),
   models = require("@root/app/setup");
 
-module.exports = app => {
+module.exports = (app) => {
   const api = app.app.api.pupil;
 
   app.get(
@@ -27,5 +27,12 @@ module.exports = app => {
     config.API_VERSION + "pupil",
     passport.authenticate("jwt", config.session),
     api.deletePupil(models.Pupil)
+  );
+
+  //оплата
+  app.post(
+    config.API_VERSION + "pay",
+    passport.authenticate("jwt", config.session),
+    api.postPay(models.Pupil)
   );
 };

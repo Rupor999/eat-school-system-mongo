@@ -11,7 +11,6 @@ module.exports = (app) => {
     passport.authenticate("jwt", config.session),
     api.getUsers(models.User, app.get("ess-secret"))
   );
-  //
   app.post(
     config.API_VERSION + "users",
     passport.authenticate("jwt", config.session),
@@ -22,7 +21,6 @@ module.exports = (app) => {
     passport.authenticate("jwt", config.session),
     api.modifyUser(models.User)
   );
-
   app.delete(
     config.API_VERSION + "users",
     passport.authenticate("jwt", config.session),

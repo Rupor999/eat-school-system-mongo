@@ -90,4 +90,36 @@ api.deletePupil = (Pupil) => (req, res) => {
   });
 };
 
+api.postPay = (Pupil) => (req, res) => {
+  Pupil.findById(req.body._id, (err, doc) => {
+    if (err) {
+      return res.status(400).json({
+        success: false,
+        message: "Ошибка изменения баланса ученика.",
+      });
+    }
+
+    if (req.body.foodType === "Буфет") {
+      doc.balans_bufet =
+        parseFloat(doc.balans_bufet) + parseFloat(req.body.summa);
+    } else if (req.body.foodType === "ГП") {
+      doc.balans_gp = parseFloat(doc.balans_gp) + parseFloat(req.body.summa);
+    }
+
+    doc.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          success: false,
+          message: "Ошибка изменения данных ученика.",
+        });
+      } else {
+        return res.status(201).json({
+          success: true,
+          message: "Изменение данных ученика прошло успешно.",
+        });
+      }
+    });
+  });
+};
+
 module.exports = api;

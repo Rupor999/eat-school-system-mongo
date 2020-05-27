@@ -4,21 +4,21 @@ const zachislenoSchema = mongoose.Schema(
   {
     id_uchenik: {
       type: String,
-      required: true
+      required: true,
     },
     data_zachislenia: {
       type: Date,
       required: true,
-      default: Date.now
+      default: Date.now,
     },
     nomer_cheka: {
       type: String,
-      required: true
+      required: false,
     },
     summa: {
       type: mongoose.Decimal128,
-      required: true
-    }
+      required: true,
+    },
   },
   { versionKey: false }
 );

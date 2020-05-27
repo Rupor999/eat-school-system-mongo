@@ -2,18 +2,43 @@ const mongoose = require("mongoose"),
   jwt = require("jsonwebtoken");
 const api = {};
 
-api.getZachisleno = Zachisleno => (req, res) => {
+api.getZachisleno = (Zachisleno) => (req, res) => {
   Zachisleno.find({}, (error, zachisleno) => {
     if (error) throw error;
-    res.status(200).json({ success: true, zachisleno: zachisleno });
+    return res.status(200).json({ success: true, zachisleno: zachisleno });
   });
 };
 
-api.newZachisleno = Zachisleno => (req, res) => {};
+api.newZachisleno = (Zachisleno) => (req, res) => {
+  if (!req.body.id_uchenik || !req.body.nomer_cheka || !req.body.summa)
+    res.status(400).json({
+      success: false,
+      message: "Пожалуйста, заполните все поля!",
+    });
+  else {
+    const newZachisleno = new Zachisleno({
+      id_uchenik: req.body._id,
+      nomer_cheka: req.body.nomer_cheka,
+      summa: req.body.summa,
+    });
 
-api.modifyZachisleno = Zachisleno => (req, res) => {};
+    newZachisleno.save((err) => {
+      if (err)
+        return res
+          .status(400)
+          .json({ success: false, message: "Ошибка сохранения." });
+      else
+        return res.status(201).json({
+          success: true,
+          message: "Запись зачислении успешно сохранен.",
+        });
+    });
+  }
+};
 
-api.deleteZachisleno = Zachisleno => (req, res) => {};
+api.modifyZachisleno = (Zachisleno) => (req, res) => {};
+
+api.deleteZachisleno = (Zachisleno) => (req, res) => {};
 
 module.exports = api;
 

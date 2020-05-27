@@ -31,6 +31,7 @@ import Cities from "./views/control/Cities.vue";
 import Kshps from "./views/control/Kshps.vue";
 import CategoriesBufet from "./views/control/CategoriesBufet.vue";
 import Schools from "./views/control/Schools.vue";
+import Mykids from "./views/control/Mykids.vue";
 //end control
 
 //begin errors
@@ -134,6 +135,11 @@ const router = new Router({
           path: "schools",
           name: "schools",
           component: Schools
+        },
+        {
+          path: "mykids",
+          name: "mykids",
+          component: Mykids
         }
       ]
     },
