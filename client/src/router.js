@@ -32,6 +32,9 @@ import Kshps from "./views/control/Kshps.vue";
 import CategoriesBufet from "./views/control/CategoriesBufet.vue";
 import Schools from "./views/control/Schools.vue";
 import Mykids from "./views/control/Mykids.vue";
+import ExpensesAndReplenishment from "./views/control/expensesAndReplenishment.vue";
+import Statistic from "./views/control/Statistic.vue";
+import Chat from "./views/control/Chat.vue";
 //end control
 
 //begin errors
@@ -140,6 +143,21 @@ const router = new Router({
           path: "mykids",
           name: "mykids",
           component: Mykids
+        },
+        {
+          path: "expensesandreplenishment",
+          name: "expensesandreplenishment",
+          component: ExpensesAndReplenishment
+        },
+        {
+          path: "statistic",
+          name: "statistic",
+          component: Statistic
+        },
+        {
+          path: "chat",
+          name: "chat",
+          component: Chat
         }
       ]
     },

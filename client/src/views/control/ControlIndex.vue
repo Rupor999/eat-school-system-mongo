@@ -92,24 +92,17 @@ export default {
           permission: [1, 2, 3, 4, 5]
         },
         {
-          title: "Пополнение счета",
-          subtitle: "Пополнение счет с помощью онлайн платежей",
-          image: "popolnenie_scheta.png",
-          route: "/control/payment",
-          permission: [1, 2, 3, 4, 5]
-        },
-        {
           title: "Расходы и пополнения",
           subtitle: "Отслеживание расходов и пополнений",
           image: "rashodi_i_popolneniya.png",
-          route: "/control/expenses-and-replenishment",
+          route: "/control/expensesandreplenishment",
           permission: [1, 2, 3, 4, 5]
         },
         {
           title: "Статистика",
           subtitle: "Статистика и анализ потребления продукции",
           image: "statistika.png",
-          route: "/control/statistics",
+          route: "/control/statistic",
           permission: [1, 2, 3, 4, 5]
         },
         {
