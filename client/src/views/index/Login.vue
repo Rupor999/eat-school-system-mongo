@@ -1,52 +1,44 @@
 <template>
-  <v-app id="inspire">
-    <v-content>
-      <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center">
-          <v-col cols="12" sm="8" md="4">
-            <v-card :loading="getLoading" class="elevation-12">
-              <v-toolbar color="primary" dark flat>
-                <v-toolbar-title>Вход в личный кабинет</v-toolbar-title>
-                <div class="flex-grow-1"></div>
-              </v-toolbar>
-              <v-card-text>
-                <v-alert v-show="error" dense border="left" type="warning">
-                  Ошибка авторизации
-                </v-alert>
-                <v-form>
-                  <v-text-field
-                    v-model="user.number"
-                    label="Номер телефона"
-                    name="number"
-                    prepend-icon="mdi-cellphone-android"
-                    type="text"
-                  ></v-text-field>
+  <div
+    class="d-flex justify-center align-center light-blue darken-1"
+    style="height: 90vh"
+  >
+    <v-card width="500" :loading="getLoading" class="elevation-12">
+      <v-toolbar color="primary" dark flat>
+        <v-toolbar-title>Вход в личный кабинет</v-toolbar-title>
+        <div class="flex-grow-1"></div>
+      </v-toolbar>
+      <v-card-text>
+        <v-alert v-show="error" dense border="left" type="warning">
+          Ошибка авторизации
+        </v-alert>
+        <v-form>
+          <v-text-field
+            v-model="user.number"
+            label="Номер телефона"
+            name="number"
+            prepend-icon="mdi-cellphone-android"
+            type="text"
+          ></v-text-field>
 
-                  <v-text-field
-                    v-model="user.password"
-                    id="password"
-                    label="Пароль"
-                    name="password"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                  ></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <div class="flex-grow-1"></div>
-                <v-btn
-                  :disabled="processing"
-                  color="primary"
-                  @click.prevent="login"
-                  >Войти</v-btn
-                >
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
-  </v-app>
+          <v-text-field
+            v-model="user.password"
+            id="password"
+            label="Пароль"
+            name="password"
+            prepend-icon="mdi-lock"
+            type="password"
+          ></v-text-field>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <div class="flex-grow-1"></div>
+        <v-btn :disabled="processing" color="primary" @click.prevent="login"
+          >Войти</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script>

@@ -167,7 +167,7 @@ export default {
         },
         {
           title: "Остались вопросы?",
-          route: "/question",
+          route: "",
           icon_name: "mdi-comment-question-outline"
         }
       ];

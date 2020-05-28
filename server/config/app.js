@@ -20,9 +20,5 @@ app.use(passport.initialize());
 
 app.set("ess-secret", config.secret);
 
-consign({})
-  .include("app/setup")
-  .then("app/api")
-  .then("app/routes")
-  .into(app);
+consign({}).include("app/setup").then("app/api").then("app/routes").into(app);
 module.exports = app;
