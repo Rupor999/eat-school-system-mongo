@@ -11,8 +11,8 @@ export default {
         { text: "Фамилия", value: "fio.surname" },
         { text: "Имя", value: "fio.name" },
         { text: "Отчество", value: "fio.midname" },
-        { text: "Роль", value: "role" },
-        { text: "Пароль", value: "password" }
+        { text: "Роль", value: "role" }
+        // { text: "Пароль", value: "password" }
       ]
     },
     //end table_settings

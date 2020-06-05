@@ -1,7 +1,0 @@
-{"_id":{"$oid":"5ddaebd98b593618b07be94d"},"id_bufet":{"$numberInt":"1"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"1"},"naimenovanie":"Сок 0,2","cena":{"$numberDecimal":"20.30"}}
-{"_id":{"$oid":"5ddaec8b42cb6718b005ff0f"},"id_bufet":{"$numberInt":"2"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"2"},"naimenovanie":"Сочни с творогом 110гр","cena":{"$numberDecimal":"12.90"}}
-{"_id":{"$oid":"5ddaece542cb6718b005ff10"},"id_bufet":{"$numberInt":"3"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"2"},"naimenovanie":"Сосиска в тесте","cena":{"$numberDecimal":"23.20"}}
-{"_id":{"$oid":"5ddaed2b42cb6718b005ff11"},"id_bufet":{"$numberInt":"4"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"2"},"naimenovanie":"Пицца 120гр","cena":{"$numberDecimal":"25.10"}}
-{"_id":{"$oid":"5ddaed3e42cb6718b005ff12"},"id_bufet":{"$numberInt":"5"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"2"},"naimenovanie":"Рулет с маком","cena":{"$numberDecimal":"11.20"}}
-{"_id":{"$oid":"5ddaed6642cb6718b005ff13"},"id_bufet":{"$numberInt":"6"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"3"},"naimenovanie":"Вафля","cena":{"$numberDecimal":"10.50"}}
-{"_id":{"$oid":"5ddaed7b42cb6718b005ff14"},"id_bufet":{"$numberInt":"7"},"id_uchrezhdenia":{"$numberInt":"3301072"},"id_kategoriya":{"$numberInt":"4"},"naimenovanie":"Яблоко","cena":{"$numberDecimal":"7.80"}}

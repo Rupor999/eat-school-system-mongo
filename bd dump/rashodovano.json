@@ -1,2 +1,0 @@
-{"_id":{"$oid":"5ddc1a34bf8ee01a5067bfcb"},"id_rashod":{"$numberInt":"1"},"id_uchenik":{"$numberLong":"330107200001"},"vid_pitania":"bufet","data_spisania":{"$date":{"$numberLong":"1574630220000"}},"id_bufet":{"$numberInt":"5"}}
-{"_id":{"$oid":"5ddc20c42943091a509c7b0c"},"id_rashod":{"$numberInt":"2"},"id_uchenik":{"$numberLong":"330107200003"},"vid_pitania":"bufet","data_spisania":{"$date":{"$numberLong":"1574630340000"}},"id_bufet":{"$numberInt":"2"}}

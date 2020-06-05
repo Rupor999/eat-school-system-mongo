@@ -13,12 +13,11 @@
         class="mr-5"
         >Назад
       </v-btn>
-      <v-select
-        v-if="userInfo.role === 1"
+      <!-- <v-select
         :items="usersList"
         v-model="value"
         label="Выберете пользователя чтобы начать чат"
-      ></v-select>
+      ></v-select> -->
     </div>
 
     <v-card class="d-flex flex-column elevation-19" style="height:100%">
@@ -97,7 +96,7 @@ export default {
       connectedStatus: "OFFLINE",
       usersList: [
         "Филатова Ксения Александровна - нет новых сообщений",
-        "Степнов Кирилл Андреевич - нет новых сообщений"
+        "Петров Петр Петрович - нет новых сообщений"
       ],
       messageArray: [
         {

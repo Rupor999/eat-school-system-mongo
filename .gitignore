@@ -86,3 +86,8 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+cmd/
+bd_dump/
+
+startClientServer.bat

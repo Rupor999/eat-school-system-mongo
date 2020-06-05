@@ -39,7 +39,7 @@ export default {
           subtitle: "Управление аккаунтами пользователей",
           image: "users.png",
           route: "/control/users",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1]
         },
         {
           title: "Буфет",
@@ -53,28 +53,28 @@ export default {
           subtitle: "Управление учетными записями учеников",
           image: "pupils.jpg",
           route: "/control/pupils",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1, 2, 3, 4]
         },
         {
           title: "Учереждения",
           subtitle: "Управление учереждениями",
           image: "institution.jpg",
           route: "/control/schools",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1]
         },
         {
           title: "КШП",
           subtitle: "Управление КШП",
           image: "kshp.jpg",
           route: "/control/kshps",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1]
         },
         {
           title: "Категории буфета",
           subtitle: "Управление категориями буфета",
           image: "kshp.jpg",
           route: "/control/categoriesbufet",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1, 4]
         },
         {
           title: "Города",
@@ -82,7 +82,7 @@ export default {
             "Управление городами в которых успользуется система школьного питания",
           image: "kshp.jpg",
           route: "/control/cities",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1]
         },
         {
           title: "Мои дети",
@@ -96,14 +96,14 @@ export default {
           subtitle: "Отслеживание расходов и пополнений",
           image: "rashodi_i_popolneniya.png",
           route: "/control/expensesandreplenishment",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1]
         },
         {
           title: "Статистика",
           subtitle: "Статистика и анализ потребления продукции",
           image: "statistika.png",
           route: "/control/statistic",
-          permission: [1, 2, 3, 4, 5]
+          permission: [1, 4]
         },
         {
           title: "Чат с поддержкой",
@@ -122,6 +122,11 @@ export default {
     },
     itemsMenuForCurrentUser(user_role) {
       return this.allItemsMenu.filter(item => {
+        if (!this.userAdditional.children.length) {
+          if (item.title === "Мои дети") {
+            return false;
+          }
+        }
         return item.permission.includes(user_role);
       });
     }
@@ -129,6 +134,9 @@ export default {
   computed: {
     userRole: function() {
       return this.$store.getters["auth/getUserInfo"].role;
+    },
+    userAdditional: function() {
+      return this.$store.getters["auth/getUserAdditional"];
     }
   }
 };

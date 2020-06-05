@@ -7,15 +7,10 @@ module.exports = (WSServer) => {
       let inputMessage = JSON.parse(message);
       switch (inputMessage.messageType) {
         case "getMessage":
-          ws.send(
-            JSON.stringify({
-              messageType: "getMessage",
-              message: getMessage(inputMessage),
-            })
-          );
+          // getMessage();
           break;
         case "saveMessage":
-          saveMessage(inputMessage);
+          // saveMessage(inputMessage);
           break;
         default:
       }
@@ -25,13 +20,17 @@ module.exports = (WSServer) => {
 
 function getMessage(inputMessage) {
   return new Promise((resolve) => {
-    // Chat.find({ from: inputMessage.userId });
+    Chat.find({ from: inputMessage.userId }, (err, chat) => {
+      resolve(chat);
+    });
     return [];
   });
 }
+
 function saveMessage(inputMessage) {
-  // let message = new Chat({
-  //
-  // })
+  return new Promise((resolve) => {
+    Chat.save({ from: inputMessage.userId }, (err) => {
+      resolve();
+    });
+  });
 }
-function refreshMessage(inputMessage) {}

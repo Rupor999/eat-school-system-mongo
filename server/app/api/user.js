@@ -63,7 +63,7 @@ api.createTestUsers = (User) => (req, res) => {
     },
     role: 4,
     additional: {
-      children: ["5ddaf31e8b593618b07be94e", "5ddbfb12b24ec70ae02c53ed"],
+      children: [],
       school: ["5ddae76c42cb6718b005ff09", "5ddae78742cb6718b005ff0b"],
     },
   });
@@ -82,27 +82,27 @@ api.createTestUsers = (User) => (req, res) => {
     },
   });
 
-  admin.save((error) => {
-    if (error) throw error;
-    return res.json({
-      success: true,
-      text: "Admin account was succesfully set up",
-    });
-  });
-  otvzapit.save((error) => {
-    if (error) throw error;
-    return res.json({
-      success: true,
-      text: "Otvzapit account was succesfully set up",
-    });
-  });
-  klruk.save((error) => {
-    if (error) throw error;
-    return res.json({
-      success: true,
-      text: "Klruk account was succesfully set up",
-    });
-  });
+  // admin.save((error) => {
+  //   if (error) throw error;
+  //   return res.json({
+  //     success: true,
+  //     text: "Admin account was succesfully set up",
+  //   });
+  // });
+  // otvzapit.save((error) => {
+  //   if (error) throw error;
+  //   return res.json({
+  //     success: true,
+  //     text: "Otvzapit account was succesfully set up",
+  //   });
+  // });
+  // klruk.save((error) => {
+  //   if (error) throw error;
+  //   return res.json({
+  //     success: true,
+  //     text: "Klruk account was succesfully set up",
+  //   });
+  // });
   kshp.save((error) => {
     if (error) throw error;
     return res.json({
@@ -110,13 +110,13 @@ api.createTestUsers = (User) => (req, res) => {
       text: "Kshp account was succesfully set up",
     });
   });
-  roditel.save((error) => {
-    if (error) throw error;
-    return res.json({
-      success: true,
-      text: "Roditel account was succesfully set up",
-    });
-  });
+  // roditel.save((error) => {
+  //   if (error) throw error;
+  //   return res.json({
+  //     success: true,
+  //     text: "Roditel account was succesfully set up",
+  //   });
+  // });
 };
 
 //ФУНКЦИЯ ВЫВОДА ВСЕХ ЮЗЕРОВ
